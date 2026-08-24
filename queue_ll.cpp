@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+// non circular....
 struct Node{
     int data;
     Node* next;
@@ -8,20 +8,28 @@ struct Node{
 
 Node* front=NULL;
 Node* rear=NULL;
+int index=-1;
 
 void q_insert(int x)
 {   
     Node* temp=new Node();
     temp->data=x;
     temp->next=NULL;
+    if(index>=20)
+    {
+        cout<<"Overflow"<<endl;
+        return;
+    }
     if(rear==NULL)
     {
         front=temp;
         rear=temp;
+        index++;
     }
     else{
         rear->next=temp;
         rear=temp;
+        index++;
     }
 
        
@@ -34,9 +42,9 @@ void q_delete()
     
     else 
     {
-        Node* temp=front;
         front=front->next;
-        delete(temp);
+        
+        index--;
     }
         
 

@@ -1,79 +1,122 @@
-#include<bits/stdc++.h>
+#include <iostream>
 using namespace std;
-// making circular double ended queue using array 
-class Node{
+// 1/09/26
+class Node {
+public:
     int data;
     Node* next;
+    Node* prev;
 
-    Node* front=NULL;
-    Node* rear=NULL;
-    int index=-1;
-
-    Node(int x)
-    {
-        data=x;
-        next=NULL;
+    Node(int val) {
+        data = val;
+        next = nullptr;
+        prev = nullptr;
     }
-
-    bool isEmpty(){
-        if(front==NULL)
-            return true;
-        return false;
-    }
-    void AddRear(int x){
-       Node* nn=new Node(x);
-       rear->next=nn;
-       rear=nn;
-    }
-    void AddFront(int x)
-    {
-        Node* nn=new Node(x);
-        nn->next=front;
-        front=nn;  
-    }
-
-
-    void DeleteFront(){
-        front=front->next;
-
-    }
-
-    void DeleteRear(){
-
-    }
-
-    void display(){
-       if(front==NULL)
-            cout<<"UNDERFLOW"<<endl;
-        Node* temp=front;
-        while(temp!=NULL)
-        {
-            cout<<temp->data<<" ";
-            temp=temp->next;
-        }
-        cout<<endl;
-    }
-
-
 };
-int main(){
-    MyDequeue dq;
-    dq.AddRear(78);
-    dq.AddRear(8);
-    dq.AddRear(67);//3
-    dq.display();
-    dq.AddRear(90);//4
-    dq.display();
-    dq.AddRear(60);//5
-    dq.display();
-    dq.AddRear(88);
-    dq.DeleteFront();
-    dq.DeleteRear();
-    dq.display();
-    dq.AddFront(45);
-    dq.display();
-    dq.AddFront(40);
-    dq.display();
-    
 
+    Node* front=nullptr;
+    Node* rear=nullptr;
+
+    bool isEmpty() {
+        return front == nullptr;
+    }
+
+    void AddFront(int x) {
+        Node* nn = new Node(x);
+        if (isEmpty()) {
+            front = rear = nn;
+            nn->next = nn->prev = nn; 
+        } else {
+            nn->next = front;
+            nn->prev = rear;
+            front->prev = nn;
+            rear->next = nn;
+            front = nn;
+        }
+    }
+
+    void AddRear(int x) {
+        Node* nn = new Node(x);
+        if (isEmpty()) {
+            front = rear = nn;
+            nn->next = nn->prev = nn;
+        } else {
+            nn->next = front;
+            nn->prev = rear;
+            rear->next = nn;
+            front->prev = nn;
+            rear = nn;
+        }
+    }
+
+    void DeleteFront() {
+        if (isEmpty()) {
+            cout << "UNDERFLOW"<<endl;
+            return;
+        }
+
+        if (front == rear) { 
+            delete front;
+            front = rear = nullptr;
+        } else {
+            
+            front = front->next;
+            front->prev = rear;
+            rear->next = front;
+            
+        }
+    }
+
+    void DeleteRear() {
+        if (isEmpty()) {
+            cout << "UNDERFLOW"<<endl;
+            return;
+        }
+
+        if (front == rear) { 
+            front = rear = nullptr;
+        }
+        else {
+            rear = rear->prev;
+            rear->next = front;
+            front->prev = rear;
+        }
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Deque is Empty"<<endl;
+            return;
+        }
+
+        Node* temp = front;
+        do {
+            cout << temp->data << " ";
+            temp = temp->next;
+        } while (temp != front);
+        cout << endl;
+    }
+
+int main() {
+
+    AddRear(78);
+    AddRear(8);
+    AddRear(67);
+    display(); 
+    AddRear(90);
+    display(); 
+    AddRear(60);
+    display();
+    AddRear(88);
+   DeleteFront(); 
+   DeleteRear();  
+    display();     
+
+    AddFront(45);
+    display(); 
+
+    AddFront(40);
+    display(); 
+
+    return 0;
 }

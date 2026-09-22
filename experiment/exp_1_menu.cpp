@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-// given a stack of size n implement push and pop and peek opreation following the lifo principle.handle the overflow and underflow condition .atlast display all content of stack.
+
 class my_stack{
     public:
     int top=-1;
-    // int n=50;
+    
     int  arr[50];
     
     void my_push(char value)

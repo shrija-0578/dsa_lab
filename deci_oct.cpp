@@ -57,7 +57,7 @@ int main()
     {
         int rem=num%8;
         stack1.my_push(rem);
-        num=num/2;
+        num=num/8;
     }
     while(!stack1.is_empty())
     {

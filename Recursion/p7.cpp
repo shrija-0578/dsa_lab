@@ -8,7 +8,7 @@ int fun(int a[], int n) {
     else
         x = fun(a, n - 1);
         
-    if (x > a[n - 1])
+    if (x > a[n - 1]) 
         return x;
     else
         return a[n - 1];
